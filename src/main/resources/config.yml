@@ -1,0 +1,57 @@
+# AngeloAchievements is a plugin focused on customizing the default Minecraft advancements.
+# I RECOMMEND using the command '/gamerule announceAdvancements false' so that the default messages
+# don't bother you, and you can enjoy only the customized messages from the plugin.
+
+# The function of 'default_message' is to provide a default message that will be shown for all advancements
+# if they do not have a specific configuration under the 'achievements:' section.
+# If an advancement has a specific type configured under 'achievements:', the default message will be ignored
+# for that advancement, and the customized message will be shown instead.
+
+# AngeloAchievements supports MiniMessage, allowing you to customize messages with great flexibility.
+
+# Section to customize specific advancements:
+# You can name the entries under 'achievements:' however you like; the name does not affect the plugin's functionality.
+# Make sure to set the advancement type with 'type', followed by its Minecraft path (e.g., minecraft:story/mine_diamond).
+
+# Example configuration for advancements:
+# achievements:
+#   Achievement1:  ⬅ This name is free; you can change it to whatever you want.
+#     type: minecraft:story/mine_diamond  ⬅ The type of advancement you want to customize.
+#     message:  ⬅ The messages that will be sent upon completing this advancement.
+#       - "<blue>You have completed the advancement <yellow>Mine a Diamond&"
+#       - "<green>Congratulations!"
+#   Achievement2:
+#     type: minecraft:adventure/kill_a_mob
+#     message:
+#       - "<gradient:#ff0000:#00ff00>You have completed the achievement First Blood!</gradient>"
+#       - "<red><bold>Incredible!"
+#     title: "You completed an achievement"  ⬅ Title that will appear on the player's screen.
+#     subtitle: "Check the chat"  ⬅ Subtitle that will appear on the player's screen.
+#     commands:  ⬅ Commands that will execute upon completing the achievement. Use '%player%' for the player's name.
+#       - "give %player% diamond 1"
+#       - "[BROCAST] %player% has killed their first mob!" ⬅ Broadcasts a message to all players.
+#       - "[SOUND] entity_player_levelup 1.0 1.0" ⬅ Plays a sound when the achievement is completed.
+
+# Default message that will be shown if an achievement does not have a specific configuration.
+default_message: "<green>%player% has earned the achievement %achievements%!"
+
+achievements:
+  Achievement1: 
+    type: minecraft:story/mine_diamond
+    message:
+      - "<blue>You have completed the advancement <yellow>Mine a Diamond"
+      - "<green>Congratulations!"
+  Achievement2:
+    type: minecraft:adventure/kill_a_mob
+    message:
+      - "<gradient:#ff0000:#00ff00>You have completed the achievement First Blood!</gradient>"
+      - "<red><bold>Incredible!"
+    title: "You completed an achievement"
+    subtitle: "Check the chat"
+    hover:
+      - "<gray>You killed your first mob!"
+      - "<gold>Good job!"
+    commands:
+      - "give %player% diamond 1"
+      - "[BROCAST] <gold>%player% has completed an achievement and was rewarded with 1 diamond."
+      - "[SOUND] entity_player_levelup 1.0 1.0"

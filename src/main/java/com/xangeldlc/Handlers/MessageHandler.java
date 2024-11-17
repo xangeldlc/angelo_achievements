@@ -18,7 +18,6 @@ public class MessageHandler extends BaseHandler {
 
     private final BukkitAudiences adventure;
 
-    // Enum que define los comandos personalizados
     public enum CommandType {
         BROADCAST("[BROADCAST]"),
         SOUND("[SOUND]");

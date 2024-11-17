@@ -12,7 +12,9 @@ import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 public class MessageHandler extends BaseHandler {
 
@@ -60,20 +62,22 @@ public class MessageHandler extends BaseHandler {
         super.handle(event, configManager);
     }
 
-    private boolean handleCustomAchievement(FileConfiguration config, String advancementKey, Player player) {
-        if (!isValidConfigSection(config, "achievements")) return false;
+private boolean handleCustomAchievement(FileConfiguration config, String advancementKey, Player player) {
+    if (!isValidConfigSection(config, "achievements")) return false;
 
-        return config.getConfigurationSection("achievements").getKeys(false).stream()
-                .filter(achievement -> isMatchingAdvancement(config, achievement, advancementKey))
-                .findFirst()
-                .map(achievement -> {
-                    sendCustomMessages(config, achievement, player);
-                    showCustomTitle(config, achievement, player);
-                    executeCustomCommands(config, achievement, player);
-                    return true;
-                })
-                .orElse(false);
+    Set<String> achievements = Objects.requireNonNull(config.getConfigurationSection("achievements")).getKeys(false);
+
+    for (String achievement : achievements) {
+        if (isMatchingAdvancement(config, achievement, advancementKey)) {
+            sendCustomMessages(config, achievement, player);
+            showCustomTitle(config, achievement, player);
+            executeCustomCommands(config, achievement, player);
+            return true; 
+        }
     }
+
+    return false;
+}
 
     private void sendCustomMessages(FileConfiguration config, String achievement, Player player) {
         List<String> messages = getListOrEmpty(config, "achievements." + achievement + ".message");
